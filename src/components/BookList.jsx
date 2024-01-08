@@ -1,6 +1,6 @@
 import { Component } from "react";
-import SingleBook from "./SingleBook";
 import { Col, Form, Row } from "react-bootstrap";
+import SingleBook from "./SingleBook";
 
 class BookList extends Component {
   state = {
@@ -23,13 +23,15 @@ class BookList extends Component {
           </Col>
         </Row>
         <Row className="g-2 mt-3">
-          {this.props.books
-            .filter((b) => b.title.toLowerCase().includes(this.state.searchQuery))
-            .map((b) => (
-              <Col xs={12} md={4} key={b.asin}>
-                <SingleBook book={b} />
-              </Col>
-            ))}
+          {this.props.books.map((b) => (
+            <Col xs={12} md={4} key={b.asin}>
+              <SingleBook
+                book={b}
+                onSelectBook={this.props.onSelectBook}
+                isSelected={b.asin === this.props.selectedAsin}
+              />
+            </Col>
+          ))}
         </Row>
       </>
     );

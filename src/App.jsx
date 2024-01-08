@@ -1,19 +1,20 @@
-import "bootstrap/dist/css/bootstrap.min.css";
-import "./App.css";
+import { Component } from "react";
+import { Col, Container, Row } from "react-bootstrap";
 import MyNav from "./components/MyNav";
 import MyFooter from "./components/MyFooter";
 import Welcome from "./components/Welcome";
-// import AllTheBooks from './components/AllTheBooks'
-import { Col, Container, Row } from "react-bootstrap";
 import BookList from "./components/BookList";
-
-import fantasy from "./data/fantasy.json";
 import CommentArea from "./components/CommentArea";
-import { Component } from "react";
+import fantasy from "./data/fantasy.json";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 class App extends Component {
   state = {
-    selectBook: null,
+    selectedAsin: null,
+  };
+
+  selectBook = (asin) => {
+    this.setState({ selectedAsin: asin });
   };
 
   render() {
@@ -22,13 +23,12 @@ class App extends Component {
         <MyNav />
         <Container>
           <Welcome />
-          {/* <AllTheBooks /> */}
           <Row>
             <Col xs={8}>
-              <BookList books={fantasy} />
+              <BookList books={fantasy} onSelectBook={this.selectBook} selectedAsin={this.state.selectedAsin} />
             </Col>
             <Col xs={4}>
-              <CommentArea />
+              <CommentArea asin={this.state.selectedAsin} />
             </Col>
           </Row>
         </Container>

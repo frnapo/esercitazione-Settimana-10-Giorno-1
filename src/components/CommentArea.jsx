@@ -11,7 +11,13 @@ class CommentArea extends Component {
     isError: false,
   };
 
-  componentDidMount = async () => {
+  componentDidUpdate(prevProps) {
+    if (prevProps.asin !== this.props.asin) {
+      this.fetchComments();
+    }
+  }
+
+  fetchComments = async () => {
     try {
       let response = await fetch("https://striveschool-api.herokuapp.com/api/comments/" + this.props.asin, {
         headers: {
@@ -37,8 +43,8 @@ class CommentArea extends Component {
       <div className="text-center">
         {this.state.isLoading && <Loading />}
         {this.state.isError && <Error />}
-        <AddComment asin={this.props.asin} />
-        <CommentList commentsToShow={this.state.comments} />
+        {this.props.asin && <AddComment asin={this.props.asin} />}
+        {this.props.asin && <CommentList commentsToShow={this.state.comments} />}
       </div>
     );
   }
