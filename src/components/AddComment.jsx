@@ -6,7 +6,7 @@ class AddComment extends Component {
     comment: {
       comment: "",
       rate: 1,
-      elementId: this.props.asin,
+      elementId: null,
     },
   };
 
@@ -15,7 +15,7 @@ class AddComment extends Component {
     try {
       let response = await fetch("https://striveschool-api.herokuapp.com/api/comments", {
         method: "POST",
-        body: JSON.stringify(this.state.comment),
+        body: JSON.stringify({ ...this.state.comment, elementId: this.props.asin }),
         headers: {
           "Content-type": "application/json",
           Authorization:
